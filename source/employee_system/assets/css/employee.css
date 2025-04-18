@@ -1,0 +1,112 @@
+
+:root {
+    --primary-color: #00bcd4;
+    --secondary-color: #f8f9fa;
+    --accent-color: #ff6b6b;
+}
+
+/* Cải tiến sidebar */
+.sidebar-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: none;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.sidebar-card:hover {
+    transform: translateY(-5px);
+}
+
+.feature-icon {
+    width: 50px;
+    height: 50px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    background: rgba(0, 188, 212, 0.1);
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.feature-link:hover .feature-icon {
+    background: var(--primary-color);
+    color: white;
+    transform: rotate(10deg);
+}
+
+/* Cải tiến carousel */
+.main-carousel {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.carousel-control-prev, .carousel-control-next {
+    width: 8%;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    margin: 0 15px;
+    height: 50px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Cải tiến cards */
+.value-card {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: all 0.4s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.value-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.value-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.3) 100%);
+    z-index: 1;
+}
+
+.value-card h6 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+.value-card p {
+    position: relative;
+    z-index: 2;
+    font-size: 0.95rem;
+    opacity: 0.9;
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadein {
+    animation: fadeIn 0.6s ease forwards;
+}
+
+.delay-1 { animation-delay: 0.2s; }
+.delay-2 { animation-delay: 0.4s; }
+.delay-3 { animation-delay: 0.6s; }

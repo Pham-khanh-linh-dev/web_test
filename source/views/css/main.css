@@ -1,0 +1,54 @@
+body {
+    font-family: Arial, sans-serif;
+}
+.sidebar {
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    background-color: #f8f9fa;
+}
+.dashboard-header {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+}
+.card {
+    margin-bottom: 20px;
+}
+
+.fixed-header {
+position: fixed; /* Đặt vị trí cố định */   
+top: 0; /* Đặt container ở vị trí đầu trang */
+left: 0; /* Căn lề trái */
+width: 100%; /* Chiếm toàn bộ chiều rộng */
+background-color: rgb(0, 255, 213); /* Màu nền của container */
+color: white; /* Màu chữ */
+padding: 10px 0; /* Khoảng cách bên trong */
+text-align: center; /* Canh giữa chữ */
+z-index: 1000; /* Đảm bảo container luôn ở trên các phần tử khác */
+
+}
+
+.container-fluid {
+    margin-top: 60px; /* Khoảng cách để tránh bị chồng lên header */
+}
+
+.marquee {
+width: 100%;
+white-space: nowrap; /* Đảm bảo văn bản không bị ngắt dòng */
+overflow: hidden; /* Ẩn phần văn bản bị cuộn ra ngoài */
+text-align: center;
+font-weight: bold;
+font-size: 18px;
+color: white;
+animation: marquee 10s linear infinite; /* Thêm hiệu ứng cuộn */
+}
+
+@keyframes marquee {
+0% {
+    transform: translateX(-100%); /* Bắt đầu từ ngoài bên phải */
+}
+100% {
+    transform: translateX(100%); /* Cuộn ra ngoài bên trái */
+}
+}
