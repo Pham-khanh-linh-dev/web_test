@@ -1,6 +1,4 @@
 <?php
-// ProductModel.php
-
 class ProductModel {
 
     private $pdo;
@@ -12,6 +10,29 @@ class ProductModel {
         } catch (PDOException $e) {
             die("Kết nối DB lỗi: " . $e->getMessage());
         }
+    }
+
+    // Lấy tất cả sản phẩm (sao chép từ admin_system, đã sửa)
+    public function getAllProducts($page = 1, $perPage = 10) {
+        $perPage = max(1, (int)$perPage);
+        $page = max(1, (int)$page);
+        $offset = ($page - 1) * $perPage;
+
+        $query = "SELECT p.id, p.barcode, p.name, p.category_id, p.selling_price, p.stock, p.created_at, c.name as category_name 
+                  FROM products p 
+                  LEFT JOIN categories c ON p.category_id = c.id 
+                  LIMIT $perPage OFFSET $offset";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Lấy tổng số sản phẩm (sao chép từ admin_system, đã sửa)
+    public function getTotalProducts() {
+        $query = "SELECT COUNT(*) FROM products";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchColumn();
     }
 
     public function checkStock($product) {

@@ -3,7 +3,7 @@
         <div class="sb-sidenav-menu">
             <div class="nav">
                 <div class="sb-sidenav-menu-heading">Chức năng hệ thống</div>
-                <a class="nav-link" href="index.php">
+                <a class="nav-link" href="/laptrinhweb_da19_hk2_2425/source/admin_system/index.php">
                     <div class="sb-nav-link-icon"><i class="fa-solid fa-house"></i></div>
                     Trang chủ
                 </a>
@@ -29,8 +29,8 @@
                 </a>
                 <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                        <a class="nav-link" href="#" >Quản lí danh mục</a>
-                        <a class="nav-link collapsed" href="#" >Quản lí sản phẩm</a>   
+                        <a class="nav-link" href="/laptrinhweb_da19_hk2_2425/source/admin_system/danhmuc.php" >Quản lí danh mục</a>
+                        <a class="nav-link collapsed" href="/laptrinhweb_da19_hk2_2425/source/admin_system/sanpham.php" >Quản lí sản phẩm</a>   
                     </nav>
                 </div>
 

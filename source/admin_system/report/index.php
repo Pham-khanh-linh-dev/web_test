@@ -2,6 +2,7 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
 $fromDate = $_GET['from_date'] ?? date('Y-m-d', strtotime('-6 days'));
 $toDate = $_GET['to_date'] ?? date('Y-m-d');
 
@@ -13,123 +14,123 @@ $orders = $report->getOrders($fromDate, $toDate);
 
 $orders = $orders ?? [];
 
-
 $username = $_SESSION['user'] ?? '';
 $role = ($username === 'admin') ? 'admin' : 'employee';
 
-
-
 require_once __DIR__ . '/../includes/header.php';
+require_once __DIR__ . '/../includes/navbar.php';
 ?>
 
-<div id="layoutSidenav_content">
-    <main class="container-fluid px-4">
-        <h1 class="mt-4">Thống kê & Báo cáo bán hàng</h1>
-        <div class="container my-4 p-4 bg-white shadow rounded">
-            <?php
-            $fromDateText = date('d/m/Y', strtotime($fromDate));
-            $toDateText = date('d/m/Y', strtotime($toDate));
+<!-- Thêm thẻ link và script trực tiếp để đảm bảo CSS/JS tải đúng -->
+<link href="../asset/css/styles.css" rel="stylesheet">
 
-            $khoangNgay = ($fromDate === $toDate)
-                ? "Dữ liệu trong ngày: $fromDateText"
-                : "Dữ liệu từ $fromDateText đến $toDateText";
-            ?>
-            <div class="alert alert-info py-2 px-3 small rounded-pill d-inline-block mb-3">
-                <i class="bi bi-calendar3"></i> <?= $khoangNgay ?>
-            </div>
+<div id="layoutSidenav">
+    <?php require_once __DIR__ . '/../includes/sidebar.php'; ?>
+    <div id="layoutSidenav_content">
+        <main class="container-fluid px-4">
+            <h1 class="mt-4">Thống kê & Báo cáo bán hàng</h1>
+            <div class="container my-4 p-4 bg-white shadow rounded">
+                <?php
+                $fromDateText = date('d/m/Y', strtotime($fromDate));
+                $toDateText = date('d/m/Y', strtotime($toDate));
 
-            <?php
-            $tongDon = array_sum(array_column($summary, 'total_orders'));
-            $tongTien = array_sum(array_column($summary, 'total_revenue'));
-            $tongSP = array_sum(array_column($summary, 'total_products'));
-            ?>
-            <div class="row mb-4">
-                <div class="col-md-4">
-                    <div class="alert alert-success">Tổng đơn hàng: <strong><?= $tongDon ?></strong></div>
+                $khoangNgay = ($fromDate === $toDate)
+                    ? "Dữ liệu trong ngày: $fromDateText"
+                    : "Dữ liệu từ $fromDateText đến $toDateText";
+                ?>
+                <div class="alert alert-info py-2 px-3 small rounded-pill d-inline-block mb-3">
+                    <i class="bi bi-calendar3"></i> <?= $khoangNgay ?>
                 </div>
-                <div class="col-md-4">
-                    <div class="alert alert-warning">Tổng sản phẩm bán ra: <strong><?= $tongSP ?></strong></div>
-                </div>
-                <div class="col-md-4">
-                    <div class="alert alert-primary">Tổng doanh thu: <strong><?= number_format($tongTien) ?>₫</strong></div>
-                </div>
-            </div>
-            <div class="card border-0 shadow-sm mb-4">
-                <div class="card-body">
-                    <form method="GET" action="index.php" class="row g-3 align-items-end">
-                        
-                        <div class="col-md-3">
-                            <label class="form-label fw-bold">Mốc thời gian nhanh</label>
-                            <select class="form-select" onchange="setDateRange(this.value)">
-                                <option value="">-- Chọn --</option>
-                                <option value="today">Hôm nay</option>
-                                <option value="yesterday">Hôm qua</option>
-                                <option value="7days">7 ngày qua</option>
-                                <option value="thismonth">Tháng này</option>
-                            </select>
-                        </div>
-                        <div class="col-md-3">
-                            <label class="form-label fw-bold">Từ ngày</label>
-                            <input type="date" name="from_date" value="<?= $fromDate ?>" class="form-control">
-                        </div>
-                        <div class="col-md-3">
-                            <label class="form-label fw-bold">Đến ngày</label>
-                            <input type="date" name="to_date" value="<?= $toDate ?>" class="form-control">
-                        </div>
-                        <div class="col-md-3 text-end">
-                            <button type="submit" class="btn btn-primary w-100">🔍 Xem báo cáo</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
 
-            <canvas id="revenueChart" height="100"></canvas>
+                <?php
+                $tongDon = array_sum(array_column($summary, 'total_orders'));
+                $tongTien = array_sum(array_column($summary, 'total_revenue'));
+                $tongSP = array_sum(array_column($summary, 'total_products'));
+                ?>
+                <div class="row mb-4">
+                    <div class="col-md-4">
+                        <div class="alert alert-success">Tổng đơn hàng: <strong><?= $tongDon ?></strong></div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="alert alert-warning">Tổng sản phẩm bán ra: <strong><?= $tongSP ?></strong></div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="alert alert-primary">Tổng doanh thu: <strong><?= number_format($tongTien) ?>₫</strong></div>
+                    </div>
+                </div>
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body">
+                        <form method="GET" action="index.php" class="row g-3 align-items-end">
+                            <div class="col-md-3">
+                                <label class="form-label fw-bold">Mốc thời gian nhanh</label>
+                                <select class="form-select" onchange="setDateRange(this.value)">
+                                    <option value="">-- Chọn --</option>
+                                    <option value="today">Hôm nay</option>
+                                    <option value="yesterday">Hôm qua</option>
+                                    <option value="7days">7 ngày qua</option>
+                                    <option value="thismonth">Tháng này</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label fw-bold">Từ ngày</label>
+                                <input type="date" name="from_date" value="<?= $fromDate ?>" class="form-control">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label fw-bold">Đến ngày</label>
+                                <input type="date" name="to_date" value="<?= $toDate ?>" class="form-control">
+                            </div>
+                            <div class="col-md-3 text-end">
+                                <button type="submit" class="btn btn-primary w-100">🔍 Xem báo cáo</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
 
-            <h5 class="mt-5">Danh sách đơn hàng</h5>
-            <table class="table table-bordered table-striped">
-                <thead class="table-dark">
-                    <tr>
-                        <th>#</th>
-                        <th>Khách hàng</th>
-                        <th>Ngày tạo</th>
-                        <th>Tổng tiền</th>
-                        <?php if ($role === 'admin'): ?>
-                            <th>Lợi nhuận</th>
-                        <?php endif; ?>
-                        <th>Chi tiết</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php if (count($orders) > 0): ?>
-                        <?php foreach ($orders as $order): ?>
-                            <tr class="<?= $order['total_price'] > 20000000 ? 'table-warning' : '' ?>">
-                                <td>#<?= $order['id'] ?></td>
-                                <td><?= htmlspecialchars($order['customer_name']) ?></td>
-                                <td><?= $order['created_at'] ?></td>
-                                <td><?= number_format($order['total_price']) ?>₫</td>
-                                <?php if ($role === 'admin'): ?>
-                                    <td><?= isset($order['profit']) ? number_format($order['profit']) . '₫' : '--' ?></td>
-                                <?php endif; ?>
-                                <td>
-                                    <a href="index.php?url=report/detail&id=<?= $order['id'] ?>" class="btn btn-sm btn-info">Chi tiết</a>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    <?php else: ?>
+                <canvas id="revenueChart" height="100"></canvas>
+
+                <h5 class="mt-5">Danh sách đơn hàng</h5>
+                <table class="table table-bordered table-striped">
+                    <thead class="table-dark">
                         <tr>
-                            <td colspan="6" class="text-center">Không có đơn hàng nào</td>
+                            <th>#</th>
+                            <th>Khách hàng</th>
+                            <th>Ngày tạo</th>
+                            <th>Tổng tiền</th>
+                            <?php if ($role === 'admin'): ?>
+                                <th>Lợi nhuận</th>
+                            <?php endif; ?>
+                            <th>Chi tiết</th>
                         </tr>
-                    <?php endif; ?>
-                </tbody>
-            </table>
-        </div>
-
-    </main>
+                    </thead>
+                    <tbody>
+                        <?php if (count($orders) > 0): ?>
+                            <?php foreach ($orders as $order): ?>
+                                <tr class="<?= $order['total_price'] > 20000000 ? 'table-warning' : '' ?>">
+                                    <td>#<?= $order['id'] ?></td>
+                                    <td><?= htmlspecialchars($order['customer_name']) ?></td>
+                                    <td><?= $order['created_at'] ?></td>
+                                    <td><?= number_format($order['total_price']) ?>₫</td>
+                                    <?php if ($role === 'admin'): ?>
+                                        <td><?= isset($order['profit']) ? number_format($order['profit']) . '₫' : '--' ?></td>
+                                    <?php endif; ?>
+                                    <td>
+                                        <a href="detail.php?id=<?= $order['id'] ?>" class="btn btn-sm btn-info">Chi tiết</a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="6" class="text-center">Không có đơn hàng nào</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
 <script>
     function setDateRange(value) {
         const today = new Date();
@@ -156,9 +157,9 @@ require_once __DIR__ . '/../includes/header.php';
     window.addEventListener('load', function() {
         const chartData = <?= json_encode($summary) ?>;
         if (!chartData || chartData.length === 0) {
-        console.warn("Không có dữ liệu để vẽ biểu đồ.");
-        return;
-    }
+            console.warn("Không có dữ liệu để vẽ biểu đồ.");
+            return;
+        }
         const labels = chartData.map(item => item.day);
         const revenue = chartData.map(item => item.total_revenue);
         const orders = chartData.map(item => item.total_orders);
@@ -232,9 +233,7 @@ require_once __DIR__ . '/../includes/header.php';
 
 <?php
 include_once __DIR__ . '/../includes/footer.php';
-?>
 
-<?php
 function fillEmptyDates($summary, $fromDate, $toDate)
 {
     $map = [];

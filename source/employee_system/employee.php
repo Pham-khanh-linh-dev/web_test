@@ -1,10 +1,11 @@
 <?php
-include_once 'config/auth_check.php';
 include_once 'config/constants.php';
+include_once 'config/auth_check.php';
 $pageTitle = 'Dashboard';
 ?>
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,8 +15,9 @@ $pageTitle = 'Dashboard';
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/employee.css?v=<?= time(); ?>">
 
 </head>
+
 <body>
-  <?php include_once __DIR__ . '/views/layout/header.php'; ?>
+    <?php include_once __DIR__ . '/views/layout/header.php'; ?>
     <div class="container mt-4">
         <div class="row">
             <!-- Sidebar -->
@@ -24,7 +26,7 @@ $pageTitle = 'Dashboard';
                     <h5 class="text-center fw-bold mb-4" style="color: var(--primary-color);">CHỨC NĂNG</h5>
                     <div class="row row-cols-1 g-3">
                         <div class="col">
-                            <a href="report.php" class="text-decoration-none d-block text-center feature-link p-3 rounded">
+                            <a href="/laptrinhweb_da19_hk2_2425/source/employee_system/report/index.php" class="text-decoration-none d-block text-center feature-link p-3 rounded">
                                 <div class="feature-icon">
                                     <i class="fas fa-chart-line"></i>
                                 </div>
@@ -107,4 +109,5 @@ $pageTitle = 'Dashboard';
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <?php include_once __DIR__ . '/views/layout/footer.php'; ?>
 </body>
+
 </html>
